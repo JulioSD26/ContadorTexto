@@ -29,7 +29,6 @@ public class WordCounterStringT {
         BufferedReader in = new BufferedReader(fileReader);
 
 
-        String textLine = null;
         int contadorPalabras = 0;
         int contadorLineas = 0;
         String linea;
