@@ -36,7 +36,7 @@ public class WordCounterStringT {
         long start = System.currentTimeMillis();
         try {
             while ((linea = in.readLine()) != null) {
-                StringTokenizer st = new StringTokenizer(linea);
+                StringTokenizer st = new StringTokenizer(linea, ",.:;?!");
                 contadorPalabras = contadorPalabras + st.countTokens();
                 contadorLineas++;
             }
