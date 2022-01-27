@@ -1,7 +1,13 @@
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
-import java.util.Scanner;
+import java.io.IOException;
+
+/* Tiempo promedio de procesamiento
+    880
+    661
+    670
+ */
 
 public class WordCounterSplit {
     public static void main(String[] args) {
@@ -10,35 +16,45 @@ public class WordCounterSplit {
             System.exit(1);
         }
         String fileName = args[0];
+        FileReader fileReader = null;
 
         try {
-            FileReader fileReader = new FileReader(fileName);
+            fileReader = new FileReader(fileName);
 
         } catch (FileNotFoundException e) {
             System.out.println("No se encuentra el archivo");
             System.exit(2);
         }
 
-        String [] text = null;
-        BufferedReader br = null;
+        BufferedReader in = new BufferedReader(fileReader);
+
+        String textLine = null;
         int contadorPalabras = 0;
+        int contadorLineas = 0;
+        String linea;
 
+        long start = System.currentTimeMillis();
         try {
-            text
-
-            while(s.hasNext()){
-                //System.out.println(s.next());
-                contadorPalabras++;
+            while ((linea = in.readLine()) !=null){
+                String[] palabras = linea.split("\\s+");
+                contadorPalabras = contadorPalabras + palabras.length;
+                contadorLineas++;
             }
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }finally{
-            if(s != null){
-                s.close();
+        } catch (IOException e) {
+            System.out.println("Error al leer el archivo");
+            System.exit(3);
+        } finally {
+            try {
+                in.close();
+            } catch (IOException e) {
+                e.printStackTrace();
             }
         }
-        System.out.println("Contador tiene: " + contadorPalabras);
+        long time = System.currentTimeMillis() - start;
 
+        System.out.printf("El archivo %s tiene %,7d palabras. " , fileName, contadorPalabras);
+        System.out.printf(" Numero de lineas: %,6d%n", contadorLineas);
+        System.out.printf("Tiempo procesamiento (milisegundos): %d %n" , time);
 
     }
 }
